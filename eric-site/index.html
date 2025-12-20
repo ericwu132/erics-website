@@ -4,48 +4,109 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eric Wu</title>
+
+    <!-- Ensures CSS still loads even if JS crashes -->
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
+
   <body>
-    <header class="topbar">
+    <!-- Top bar (hidden until docked) -->
+    <header class="topbar" id="topbar">
       <div class="topbar__inner">
         <a class="brand" href="#top">Eric</a>
-        <nav class="topbar__links" id="topbarLinks"></nav>
+        <nav class="topbar__links" id="topbarLinks" aria-label="Top links"></nav>
       </div>
     </header>
 
-    <main id="top" class="page">
+    <main id="top">
+      <!-- HERO -->
       <section class="hero">
-        <div class="hero__content">
-          <h1>Hi, I’m Eric!</h1>
+        <div class="hero__grid">
+          <div class="hero__content">
+            <h1 class="fade-in">Hi, I’m Eric!</h1>
 
-          <h2>Right now, I’m:</h2>
-          <ul>
-            <li>studying mechatronics engineering at UWaterloo</li>
-            <li>a UWFE suspension manufacturer</li>
-            <li>creating hardware with the cheapest materials possible</li>
-            <li>learning backend for websites and apps</li>
-          </ul>
+            <h2 class="fade-in">Right now, I’m:</h2>
+            <ul class="fade-in">
+              <li>studying mechatronics engineering at UWaterloo</li>
+              <li>a UWFE suspension manufacturer</li>
+              <li class="sub">pivoting to WATonomous next term</li>
+              <li>creating hardware with the cheapest materials possible</li>
+              <li>learning backend for websites and apps</li>
+              <li class="sub">useful for hackathons and this site</li>
+            </ul>
 
-          <h2>What I love:</h2>
-          <ul>
-            <li>finding the solutions to the funniest problems</li>
-            <li>doing work that makes time irrelevant</li>
-            <li>anything about history (seriously)</li>
-          </ul>
+            <h2 class="fade-in">What I love:</h2>
+            <ul class="fade-in">
+              <li>finding the funniest solutions to the funniest problems</li>
+              <li>doing work that makes time irrelevant</li>
+              <li>anything about history (seriously)</li>
+            </ul>
+
+            <div class="downhint fade-in" id="learnMore">
+              <span>What I’ve been up to</span>
+              <span class="arrow" aria-hidden="true">›</span>
+            </div>
+          </div>
+
+          <!-- SIDE LINKS (start here) -->
+          <aside class="side" id="side">
+            <nav class="linklist" id="sideNav" aria-label="Social links">
+              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin</a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">instagram</a>
+              <a href="https://github.com/" target="_blank" rel="noreferrer">github</a>
+              <a href="https://devpost.com/" target="_blank" rel="noreferrer">devpost</a>
+              <a href="/resume.pdf" target="_blank" rel="noreferrer">resume</a>
+            </nav>
+          </aside>
         </div>
-
-        <aside class="side" id="side">
-          <nav class="linklist" id="linklist">
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer">linkedin</a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">instagram</a>
-            <a href="https://github.com" target="_blank" rel="noreferrer">github</a>
-            <a href="https://devpost.com" target="_blank" rel="noreferrer">devpost</a>
-            <a href="/resume.pdf" target="_blank" rel="noreferrer">resume</a>
-          </nav>
-        </aside>
       </section>
 
-      <section style="height: 200vh;"></section>
+      <!-- PROJECTS -->
+      <section class="projects" id="projects">
+        <div class="projects__inner">
+          <article class="card card--text-left fade-in">
+            <div class="card__text">
+              <h3>Figma Make-a-Thon — 1st Place</h3>
+              <p>Replace this text with your case study summary.</p>
+            </div>
+            <div class="card__media">
+              <img src="/images/washer.gif" alt="Project visual" />
+            </div>
+          </article>
+
+          <article class="card card--text-right fade-in">
+            <div class="card__media">
+              <img src="/images/robot.png" alt="Robot CAD render" />
+            </div>
+            <div class="card__text">
+              <h3>Mechanical Lead — VEX Robotics</h3>
+              <p>Replace this with what you designed + a concrete outcome.</p>
+            </div>
+          </article>
+
+          <article class="card card--text-left fade-in">
+            <div class="card__text">
+              <h3>BoxBots Hackathon — Best Game Overall</h3>
+              <p>Replace with: problem → build → your role → impact.</p>
+            </div>
+            <div class="card__media">
+              <div class="placeholder">image here</div>
+            </div>
+          </article>
+
+          <article class="card card--text-right fade-in">
+            <div class="card__media">
+              <div class="placeholder">image here</div>
+            </div>
+            <div class="card__text">
+              <h3>Inspire Table Tennis Assoc. — Founder & Treasurer</h3>
+              <p>Replace with: what you started, what you manage, and what it enabled.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div style="height: 40vh"></div>
     </main>
 
     <script type="module" src="/src/main.js"></script>

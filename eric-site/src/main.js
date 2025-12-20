@@ -1,29 +1,309 @@
 import "./style.css";
 
-const linklist = document.getElementById("linklist");
-const side = document.getElementById("side");
+/**
+ * Features:
+ * - Header menu appears on scroll
+ * - Links move into the header one-by-one and back out dynamically
+ * - Sidebar link positions are PINNED (no shifting) while docked:
+ *   when a link leaves, a placeholder stays; when it returns, it goes back to its slot.
+ * - Fancy underline is CSS
+ * - Fade-in text on scroll (IntersectionObserver)
+ * - "Learn more" arrow rotates right -> down and click scrolls to projects
+ */
+
+const topbar = document.getElementById("topbar");
 const topbarLinks = document.getElementById("topbarLinks");
+const sideNav = document.getElementById("sideNav");
 
-// Create a scroll trigger point (“sentinel”)
-const sentinel = document.createElement("div");
-sentinel.style.position = "absolute";
-sentinel.style.top = "240px"; // adjust when you want the dock to trigger
-sentinel.style.left = "0";
-sentinel.style.width = "1px";
-sentinel.style.height = "1px";
-document.body.prepend(sentinel);
+/* =========================
+   TUNING (YOUR EXACT SETTINGS)
+   ========================= */
+const HEADER_SHOW_AT_Y = 50;      // smaller = header appears earlier
+const STEP_PX = 95;              // smaller = links transfer faster
+const DURATION = 450;
+const EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+const MAX_MOVES_PER_FRAME = 2;
+/* ========================= */
 
-const dock = (shouldDock) => {
-  document.body.classList.toggle("isDocked", shouldDock);
-  if (shouldDock) {
-    topbarLinks.appendChild(linklist); // move links into header
-  } else {
-    side.appendChild(linklist);        // move links back to sidebar
+function allMovableNodes() {
+  return [
+    ...topbarLinks.querySelectorAll("a"),
+    ...sideNav.querySelectorAll("a, .link-placeholder"),
+  ];
+}
+
+function measure(elements) {
+  const map = new Map();
+  for (const el of elements) map.set(el, el.getBoundingClientRect());
+  return map;
+}
+
+function flip(firstRects, elements) {
+  for (const el of elements) {
+    const first = firstRects.get(el);
+    const last = el.getBoundingClientRect();
+    if (!first) continue;
+
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+    if (dx === 0 && dy === 0) continue;
+
+    el.animate(
+      [
+        { transform: `translate(${dx}px, ${dy}px)` },
+        { transform: "translate(0px, 0px)" },
+      ],
+      { duration: DURATION, easing: EASING, fill: "both" }
+    );
   }
-};
+}
 
-const io = new IntersectionObserver(([entry]) => {
-  dock(!entry.isIntersecting);
+function setDocked(docked) {
+  document.body.classList.toggle("isDocked", docked);
+}
+
+/* ---------- Stable ordering for sidebar links ---------- */
+function ensureIndices() {
+  const links = sideNav.querySelectorAll("a");
+  links.forEach((a, i) => {
+    if (a.dataset.idx == null) a.dataset.idx = String(i);
+  });
+}
+ensureIndices();
+
+function makePlaceholderLike(linkEl) {
+  const r = linkEl.getBoundingClientRect();
+  const ph = document.createElement("div");
+  ph.className = "link-placeholder";
+  ph.style.height = `${Math.ceil(r.height)}px`;
+  ph.dataset.idx = linkEl.dataset.idx;
+  return ph;
+}
+
+function findPlaceholder(idx) {
+  return sideNav.querySelector(`.link-placeholder[data-idx="${idx}"]`);
+}
+
+function createAllPlaceholdersIfMissing() {
+  // Ensure every slot from 0..maxIdx has either a link or a placeholder.
+  const allLinks = [
+    ...sideNav.querySelectorAll("a"),
+    ...topbarLinks.querySelectorAll("a"),
+  ];
+
+  const maxIdx = allLinks.reduce((m, a) => {
+    const v = Number(a.dataset.idx ?? "0");
+    return Math.max(m, v);
+  }, 0);
+
+  // sample height for placeholders
+  const sample = sideNav.querySelector("a") || topbarLinks.querySelector("a");
+  const sampleH = sample ? Math.ceil(sample.getBoundingClientRect().height) : 24;
+
+  for (let i = 0; i <= maxIdx; i++) {
+    const idx = String(i);
+
+    // if there's already a link in this slot, skip
+    if (sideNav.querySelector(`a[data-idx="${idx}"]`)) continue;
+    // if there's already a placeholder for this slot, skip
+    if (findPlaceholder(idx)) continue;
+
+    const ph = document.createElement("div");
+    ph.className = "link-placeholder";
+    ph.dataset.idx = idx;
+    ph.style.height = `${sampleH}px`;
+
+    // insert by idx order among children
+    const before = [...sideNav.children].find((node) => {
+      const nIdx = node.dataset?.idx;
+      if (nIdx == null) return false;
+      return Number(nIdx) > i;
+    });
+
+    if (before) sideNav.insertBefore(ph, before);
+    else sideNav.appendChild(ph);
+  }
+}
+
+function removeAllPlaceholders() {
+  sideNav.querySelectorAll(".link-placeholder").forEach((ph) => ph.remove());
+}
+
+function moveOneToTop_PINNED() {
+  const next = sideNav.querySelector("a");
+  if (!next) return;
+
+  const before = measure(allMovableNodes());
+
+  const ph = makePlaceholderLike(next);
+  next.replaceWith(ph);
+  topbarLinks.appendChild(next);
+
+  requestAnimationFrame(() => flip(before, allMovableNodes()));
+}
+
+function moveOneToSide_PINNED() {
+  const last = topbarLinks.querySelector("a:last-child");
+  if (!last) return;
+
+  const before = measure(allMovableNodes());
+
+  const idx = last.dataset.idx;
+  const ph = findPlaceholder(idx);
+
+  if (ph) {
+    ph.replaceWith(last);
+  } else {
+    // fallback: insert by index order
+    const beforeNode = [...sideNav.children].find((node) => {
+      const nIdx = node.dataset?.idx;
+      if (nIdx == null) return false;
+      return Number(nIdx) > Number(idx);
+    });
+    if (beforeNode) sideNav.insertBefore(last, beforeNode);
+    else sideNav.appendChild(last);
+  }
+
+  requestAnimationFrame(() => flip(before, allMovableNodes()));
+}
+
+function snapAllBackToSidebar() {
+  // Put links back in sidebar, remove placeholders, and sort by idx.
+  const links = [...topbarLinks.querySelectorAll("a")];
+  links.forEach((a) => sideNav.appendChild(a));
+
+  removeAllPlaceholders();
+
+  const sorted = [...sideNav.querySelectorAll("a")].sort(
+    (a, b) => Number(a.dataset.idx) - Number(b.dataset.idx)
+  );
+  sorted.forEach((a) => sideNav.appendChild(a));
+}
+
+/* ---------- Header readiness: avoids “links disappear into hidden header” ---------- */
+let headerReady = false;
+
+topbar.addEventListener("transitionend", (e) => {
+  if (e.propertyName !== "transform") return;
+  headerReady = document.body.classList.contains("isDocked");
 });
 
-io.observe(sentinel);
+/* ---------- Target number of links in header ---------- */
+function targetCount(scrollY) {
+  if (scrollY <= HEADER_SHOW_AT_Y) return 0;
+
+  const total =
+    sideNav.querySelectorAll("a").length + topbarLinks.querySelectorAll("a").length;
+
+  const progressed = scrollY - HEADER_SHOW_AT_Y;
+
+  // No “early bias” here; adjust only with STEP_PX
+  const want = Math.floor(progressed / STEP_PX) + 1;
+
+  return Math.max(0, Math.min(total, want));
+}
+
+let ticking = false;
+
+function updateMenuTransfer() {
+  const y = window.scrollY;
+
+  const shouldDock = y > HEADER_SHOW_AT_Y;
+  const isDocked = document.body.classList.contains("isDocked");
+
+  // Undocking: restore everything
+  if (!shouldDock && isDocked) {
+    snapAllBackToSidebar();
+    headerReady = false;
+    setDocked(false);
+    return;
+  }
+
+  // Docking: start header slide-in (no link moves until ready)
+  if (shouldDock && !isDocked) {
+    headerReady = false;
+    setDocked(true);
+    return;
+  }
+
+  if (!shouldDock) return;
+
+  // While header slides in: keep links visible in sidebar
+  if (!headerReady) {
+    snapAllBackToSidebar();
+    return;
+  }
+
+  // Docked & ready: ensure sidebar slots exist (prevents shifting)
+  createAllPlaceholdersIfMissing();
+
+  const want = targetCount(y);
+  let have = topbarLinks.querySelectorAll("a").length;
+
+  // Move down/up to match want (limited per frame)
+  let moves = 0;
+  while (have < want && moves < MAX_MOVES_PER_FRAME) {
+    moveOneToTop_PINNED();
+    have++;
+    moves++;
+  }
+
+  moves = 0;
+  while (have > want && moves < MAX_MOVES_PER_FRAME) {
+    moveOneToSide_PINNED();
+    have--;
+    moves++;
+  }
+}
+
+/* ---------- Fade-in text on scroll ---------- */
+function setupFadeIn() {
+  const fadeEls = document.querySelectorAll(".fade-in");
+  if (!fadeEls.length) return;
+
+  const fadeObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          fadeObserver.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.15 }
+  );
+
+  fadeEls.forEach((el) => fadeObserver.observe(el));
+}
+
+/* ---------- Learn-more arrow rotate + click scroll ---------- */
+function setupLearnMore() {
+  const learnMore = document.getElementById("learnMore");
+  const projects = document.getElementById("projects");
+  if (!learnMore || !projects) return;
+
+  learnMore.addEventListener("click", () => {
+    projects.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  
+}
+
+/* ---------- Scroll loop ---------- */
+function onScroll() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    updateMenuTransfer();
+    ticking = false;
+  });
+}
+
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("resize", () => {
+  updateMenuTransfer();
+});
+
+setupFadeIn();
+setupLearnMore();
+updateMenuTransfer();
