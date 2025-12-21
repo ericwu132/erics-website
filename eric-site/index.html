@@ -13,7 +13,16 @@
     <!-- Top bar (hidden until docked) -->
     <header class="topbar" id="topbar">
       <div class="topbar__inner">
-        <a class="brand" href="#top">Eric</a>
+        <a class="brand brand--signature" href="#top" aria-label="Home">
+          <video
+            src="/signature.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+        </a>
+
         <nav class="topbar__links" id="topbarLinks" aria-label="Top links"></nav>
       </div>
     </header>
@@ -23,10 +32,10 @@
       <section class="hero">
         <div class="hero__grid">
           <div class="hero__content">
-            <h1 class="fade-in">Hi, I’m Eric!</h1>
+            <h1 class="fade-in fade-delay-300">Hi, I’m Eric!</h1>
 
-            <h2 class="fade-in">Right now, I’m:</h2>
-            <ul class="fade-in">
+              <h2 class="fade-in fade-delay-800">Right now, I’m:</h2>
+              <ul class="fade-in fade-delay-800">
               <li>studying mechatronics engineering at UWaterloo</li>
               <li>a UWFE suspension manufacturer</li>
               <li class="sub">pivoting to WATonomous next term</li>
@@ -35,14 +44,14 @@
               <li class="sub">useful for hackathons and this site</li>
             </ul>
 
-            <h2 class="fade-in">What I love:</h2>
-            <ul class="fade-in">
+            <h2 class="fade-in fade-delay-800">What I love:</h2>
+            <ul class="fade-in fade-delay-800">
               <li>finding the funniest solutions to the funniest problems</li>
               <li>doing work that makes time irrelevant</li>
               <li>anything about history (seriously)</li>
             </ul>
 
-            <div class="downhint fade-in" id="learnMore">
+            <div class="downhint fade-in fade-delay-1300" id="learnMore">
               <span>What I’ve been up to</span>
               <span class="arrow" aria-hidden="true">›</span>
             </div>
@@ -51,11 +60,11 @@
           <!-- SIDE LINKS (start here) -->
           <aside class="side" id="side">
             <nav class="linklist" id="sideNav" aria-label="Social links">
-              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin</a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">instagram</a>
-              <a href="https://github.com/" target="_blank" rel="noreferrer">github</a>
-              <a href="https://devpost.com/" target="_blank" rel="noreferrer">devpost</a>
-              <a href="/resume.pdf" target="_blank" rel="noreferrer">resume</a>
+              <a href="https://www.linkedin.com/in/w-eric/" target="_blank" rel="noreferrer">linkedin</a>
+              <a href="https://www.instagram.com/ericwu132/" target="_blank" rel="noreferrer">instagram</a>
+              <a href="https://github.com/ericwu132" target="_blank" rel="noreferrer">github</a>
+              <a href="https://devpost.com/ericwu132?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav" target="_blank" rel="noreferrer">devpost</a>
+              <a href="/EricResumeV1.pdf" target="_blank" rel="noreferrer">resume</a>
             </nav>
           </aside>
         </div>
@@ -67,10 +76,10 @@
           <article class="card card--text-left fade-in">
             <div class="card__text">
               <h3>Figma Make-a-Thon — 1st Place</h3>
-              <p>Replace this text with your case study summary.</p>
+              <p>We (Eric and Ryan) have had some crazy issues using laundry spaces in Waterloo. From flooded washers to waiting for over an hour for a free dryer at 3 AM, we've experienced it all. Because of this trauma, we really wanted to make an app that solves our issues. Doing laundry is such a mundane, boring, and oftentimes a time-wasting task, especially for first years. With our app, we "gamified" the chore of laundry, turning it into an interactive, community-based platform to improve communication, and most importantly save time.</p>
             </div>
             <div class="card__media">
-              <img src="/images/washer.gif" alt="Project visual" />
+              <img src="/waterloowash.png" alt="Project visual" />
             </div>
           </article>
 

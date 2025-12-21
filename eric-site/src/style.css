@@ -53,6 +53,19 @@ body {
   font-size: 16px;
   letter-spacing: 0.2px;
 }
+/* ---------- Signature video ---------- */
+.brand--signature {
+  display: flex;
+  align-items: center;
+  height: 44px; /* matches topbar height */
+}
+
+.brand--signature video {
+  height: 32px;        /* tweak this */
+  width: auto;
+  display: block;
+  pointer-events: none; /* clicks go to the link */
+}
 
 .topbar__links {
   display: flex;
@@ -71,12 +84,11 @@ body {
 
 body.isDocked .topbar {
   transform: translateY(0);
-  background: rgba(71, 90, 53, 0.92);
-  backdrop-filter: blur(10px);
-
-  /* clickable only when visible */
+  background: var(--bg-2); /* solid dark green */
+  backdrop-filter: none;
   pointer-events: auto;
 }
+
 
 /* ---------- HERO ---------- */
 .hero {
@@ -186,8 +198,8 @@ body.isDocked .topbar {
   border-radius: 18px;
   padding: 22px;
   display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 22px;
+  grid-template-columns: 1fr 500px;
+  gap: 33px;
   align-items: stretch;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
@@ -244,7 +256,7 @@ body.isDocked .topbar {
   }
 
   .linklist {
-    text-align: left;
+    text-align: right;
     flex-direction: row;
     flex-wrap: wrap;
 
@@ -269,9 +281,11 @@ body.isDocked .topbar {
 .linklist a,
 .topbar__links a {
   position: relative;
-  text-decoration: none; /* remove default underline */
-  display: inline-block;
+  display: inline-block;   /* key */
+  width: fit-content;      /* key: underline matches text width */
+  text-decoration: none;
 }
+
 
 .linklist a::after,
 .topbar__links a::after {
@@ -279,15 +293,15 @@ body.isDocked .topbar {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -4px;
+  bottom: -0.18em;   /* tune this: -0.12em to -0.22em */
   height: 2px;
   background: currentColor;
 
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 220ms ease;
-  opacity: 0.9;
 }
+
 
 .linklist a:hover::after,
 .topbar__links a:hover::after,
@@ -297,15 +311,54 @@ body.isDocked .topbar {
 }
 
 /* ---------- Fade-in text animation ---------- */
+/* ---------- Fade-up (gautham.city-ish) ---------- */
 .fade-in {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 500ms ease, transform 500ms ease;
+  transform: translateY(22px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
+
+/* optional: feels a bit more premium, remove if you don’t want it */
+/* .fade-in { filter: blur(2px); }
+.fade-in.is-visible { filter: blur(0); transition: filter 700ms cubic-bezier(0.22, 1, 0.36, 1); } */
 
 .fade-in.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ---------- Stagger delay ---------- */
+.fade-delay-500 {
+  transition-delay: 500ms;
+}
+
+/* ---------- Stagger delay helpers ---------- */
+.fade-delay-300  { transition-delay: 300ms; }
+.fade-delay-800  { transition-delay: 800ms; }
+.fade-delay-1300 { transition-delay: 1300ms; }
+
+/* ---------- Sidebar "pulled down" intro ---------- */
+@keyframes pullDownIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  100% {
+    opacity: 0.92; /* matches your link opacity vibe */
+    transform: translateY(0);
+  }
+}
+
+/* Only run on first load while body has .intro */
+body.intro .linklist a {
+  opacity: 0;
+  transform: translateY(-18px);
+  animation: pullDownIn 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0ms);
+  will-change: transform, opacity;
 }
 
 /* ---------- Placeholders (keep sidebar “slots” pinned) ---------- */
@@ -314,6 +367,29 @@ body.isDocked .topbar {
   width: 100%;
   pointer-events: none;
   opacity: 0;
+}
+/* ---------- Sidebar "pulled down" intro ---------- */
+@keyframes pullDownIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-26px);
+  }
+  100% {
+    opacity: 0.92;
+    transform: translateY(0);
+  }
+}
+
+/* Runs only once when body has .intro */
+body.intro .linklist a {
+  opacity: 0;
+  transform: translateY(-26px);
+
+  /* 👇 THIS is the line you asked about */
+  animation: pullDownIn 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  animation-delay: var(--delay, 0ms);
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {

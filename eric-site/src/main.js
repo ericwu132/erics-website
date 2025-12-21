@@ -22,7 +22,7 @@ const HEADER_SHOW_AT_Y = 50;      // smaller = header appears earlier
 const STEP_PX = 95;              // smaller = links transfer faster
 const DURATION = 450;
 const EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
-const MAX_MOVES_PER_FRAME = 2;
+const MAX_MOVES_PER_FRAME = 6;
 /* ========================= */
 
 function allMovableNodes() {
@@ -288,6 +288,33 @@ function setupLearnMore() {
 
   
 }
+function setupSideLinkIntro() {
+  // Respect reduced motion
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const links = sideNav?.querySelectorAll("a");
+  if (!links || !links.length) return;
+
+  document.body.classList.add("intro");
+
+  // Stagger from top to bottom
+  const step = 110;     // time between each link (ms)
+  const duration = 700; // must match CSS animation duration (ms)
+
+  links.forEach((a, i) => {
+    a.style.setProperty("--delay", `${i * step}ms`);
+  });
+
+  // Remove the intro class after animation finishes
+  const total = (links.length - 1) * step + duration + 50;
+  setTimeout(() => {
+    document.body.classList.remove("intro");
+    // Optional: clean up inline vars
+    links.forEach((a) => a.style.removeProperty("--delay"));
+  }, total);
+}
+
+setupSideLinkIntro();
 
 /* ---------- Scroll loop ---------- */
 function onScroll() {
