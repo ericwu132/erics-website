@@ -4,7 +4,7 @@
   --text: #f5f2ea;
   --muted: rgba(245, 242, 234, 0.75);
 
-  --card: #a9b36d;
+  --card:  #597143;
   --card-2: #476c38;
 
   --padX: 72px;
@@ -18,10 +18,11 @@ html, body {
 }
 
 body {
-  background: #ffffff;
-  color: #111;
+  background: #425331;   /* dark green everywhere */
+  color: var(--text);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
+
 
 /* ---------- TOP BAR (smaller) ---------- */
 .topbar {
@@ -84,7 +85,7 @@ body {
 
 body.isDocked .topbar {
   transform: translateY(0);
-  background: var(--bg-2); /* solid dark green */
+  background: rgb(72,90,54); /* solid dark green */
   backdrop-filter: none;
   pointer-events: auto;
 }
@@ -92,10 +93,10 @@ body.isDocked .topbar {
 
 /* ---------- HERO ---------- */
 .hero {
-  background: var(--bg);
+  background: #425331;
   color: var(--text);
   padding: 64px var(--padX) 56px;
-  min-height: 86vh;
+  min-height: 100vh;
 }
 
 .hero__grid {
@@ -237,6 +238,79 @@ body.isDocked .topbar {
   object-fit: cover;
   display: block;
 }
+/* ---------- Card hover actions ---------- */
+.card {
+  position: relative;
+  overflow: hidden; /* clips the sliding buttons */
+}
+
+/* Button container */
+.card__actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  gap: 14px;
+  justify-content: flex-start;
+
+  padding: 24px 32px;
+
+  /* hidden state */
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+
+  transition:
+    opacity 260ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reveal on hover */
+.card:hover .card__actions {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ---------- Buttons ---------- */
+.card__btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+
+  background: rgba(255,255,255,0.15);
+  color: var(--text);
+
+  transition:
+    background 200ms ease,
+    transform 200ms ease;
+}
+
+.card__btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-1px);
+}
+
+/* Primary CTA */
+.card__btn--primary {
+  background: #f5f2ea;
+  color: #2d3a1f;
+}
+
+.card__btn--primary:hover {
+  background: #ffffff;
+}
+
+.card__actions {
+  transition-delay: 100ms;
+}
+
+
 
 .placeholder {
   color: rgba(255,255,255,0.85);
@@ -336,9 +410,9 @@ body.isDocked .topbar {
 }
 
 /* ---------- Stagger delay helpers ---------- */
-.fade-delay-300  { transition-delay: 300ms; }
-.fade-delay-800  { transition-delay: 800ms; }
-.fade-delay-1300 { transition-delay: 1300ms; }
+.fade-delay-300  { transition-delay: 600ms; }
+.fade-delay-800  { transition-delay: 1400ms; }
+.fade-delay-1300 { transition-delay: 2500ms; }
 
 /* ---------- Sidebar "pulled down" intro ---------- */
 @keyframes pullDownIn {
