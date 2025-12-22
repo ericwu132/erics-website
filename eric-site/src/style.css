@@ -290,9 +290,45 @@ body.isDocked .topbar {
 .card__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;     /* fills box, crops nicely */
+  object-position: center;
   display: block;
+
+
+  /* ---------- BoxBots-only image behavior ---------- */
+.card--boxbots .card__media {
+  background: transparent;      /* remove the green behind it */
+  overflow: hidden;             /* clip image to rounded corners */
+  border-radius: 18px;   
+  height: 100%       /* more visible fillet */
 }
+
+.card--boxbots {
+  align-items: stretch;
+}
+
+/* BoxBots image: scale down significantly */
+.card--boxbots .card__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card--boxbots .card__media img {
+  width: 1% !important;   /* FORCE override */
+  height: auto !important;
+
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+
+
+  /* optional: ensures rounding looks perfect even on some browsers */
+  border-radius: inherit;
+}
+
+
 /* ---------- Card hover actions ---------- */
 .card {
   position: relative;
@@ -386,6 +422,10 @@ body.isDocked .topbar {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
 }
 
+.card--small-media .card__media img {
+  max-height: 280px;   /* tweak this number */
+  object-fit: contain;
+}
 
 
 
