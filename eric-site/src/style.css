@@ -5,7 +5,7 @@
   --muted: rgba(245, 242, 234, 0.75);
 
   --card:  #597143;
-  --card-2: #476c38;
+  --card-2:#476c38;
 
   --padX: 72px;
 }
@@ -22,7 +22,6 @@ body {
   color: var(--text);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
-
 
 /* ---------- TOP BAR (smaller) ---------- */
 .topbar {
@@ -54,6 +53,7 @@ body {
   font-size: 16px;
   letter-spacing: 0.2px;
 }
+
 /* ---------- Signature video ---------- */
 .brand--signature {
   display: flex;
@@ -85,11 +85,10 @@ body {
 
 body.isDocked .topbar {
   transform: translateY(0);
-  background: rgb(72,90,54); /* solid dark green */
+  background: rgb(72, 90, 54); /* solid dark green */
   backdrop-filter: none;
   pointer-events: auto;
 }
-
 
 /* ---------- HERO ---------- */
 .hero {
@@ -133,7 +132,6 @@ body.isDocked .topbar {
   color: var(--muted);
 }
 
-/* “Learn more” */
 /* =========================
    Learn-more hover arrow
    ========================= */
@@ -165,41 +163,30 @@ body.isDocked .topbar {
   transform: translateY(-2px);
 }
 
-
-
 .downhint .arrow {
   display: inline-block;
   font-size: 28px;
   line-height: 1;
 
-  transform-box: fill-box;     /* 👈 THIS is the missing piece */
-  transform-origin: center;    /* center pivot */
+  transform-box: fill-box;
+  transform-origin: center;
 
   transform: rotate(0deg);
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
-
-
 /* rotate ONLY on hover */
 .downhint:hover .arrow {
-  transform: rotate(90deg);             /* down */
+  transform: rotate(90deg); /* right -> down */
 }
 
-
-/* Side links */
-.side {
-  padding-top: 92px;
-}
+/* ---------- Side links ---------- */
+.side { padding-top: 92px; }
 
 .linklist {
   display: flex;
   flex-direction: column;
-
-  /* YOU ASKED: 45px spacing */
-  gap: 45px;
-
+  gap: 45px;           /* your spacing */
   text-align: right;
 }
 
@@ -221,7 +208,7 @@ body.isDocked .topbar {
   flex-direction: column;
   gap: 40px;
 
-  max-width: 1250px;   /* 👈 THIS controls width */
+  max-width: 1250px;   /* controls width */
   margin: 0 auto;      /* centers the cards */
 }
 
@@ -236,7 +223,6 @@ body.isDocked .topbar {
 
   color: var(--text);
   opacity: 0.50;
-  
 }
 
 .projects__title::after {
@@ -249,6 +235,7 @@ body.isDocked .topbar {
   opacity: 0.6;
 }
 
+/* ---------- Cards ---------- */
 .card {
   background: var(--card);
   border-radius: 18px;
@@ -258,6 +245,14 @@ body.isDocked .topbar {
   gap: 33px;
   align-items: stretch;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+  position: relative;
+  overflow: hidden; /* clips sliding buttons */
+
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .card--text-right {
@@ -266,6 +261,7 @@ body.isDocked .topbar {
 
 .card__text {
   padding: 10px 14px;
+  position: relative; /* anchor for absolute buttons */
 }
 
 .card__text h3 {
@@ -294,54 +290,37 @@ body.isDocked .topbar {
   object-position: center;
   display: block;
 
-
-  /* ---------- BoxBots-only image behavior ---------- */
-.card--boxbots .card__media {
-  background: transparent;      /* remove the green behind it */
-  overflow: hidden;             /* clip image to rounded corners */
-  border-radius: 18px;   
-  height: 100%       /* more visible fillet */
+  /* ensures rounding looks perfect even on some browsers */
+  border-radius: inherit;
 }
 
-.card--boxbots {
-  align-items: stretch;
-}
+/* ---------- BoxBots ONLY (clean + works) ---------- */
+.card--boxbots { align-items: stretch; }
 
-/* BoxBots image: scale down significantly */
 .card--boxbots .card__media {
+  background: transparent;  /* no green behind it */
+  border-radius: 1px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Scale down the BoxBots image */
 .card--boxbots .card__media img {
-  width: 1% !important;   /* FORCE override */
-  height: auto !important;
-
+  width: auto;
+  height: auto;
+  max-width: 80%;   /* ~3× smaller */
+  max-height: 80%;
   object-fit: contain;
-  border-radius: 14px;
+  border-radius: 18px;
 }
 
+/* If you ever want the BoxBots media box to be a fixed height, uncomment:
+.card--boxbots .card__media { min-height: 320px; }
+*/
 
-
-  /* optional: ensures rounding looks perfect even on some browsers */
-  border-radius: inherit;
-}
-
-
-/* ---------- Card hover actions ---------- */
-.card {
-  position: relative;
-  overflow: hidden; /* clips the sliding buttons */
-}
-
-/* Button container */
-/* ---------- Card hover actions (scoped to text column) ---------- */
-.card__text {
-  position: relative; /* anchor for absolute buttons */
-}
-
-/* Button container */
+/* ---------- Card hover actions (buttons) ---------- */
 .card__actions {
   position: absolute;
   left: 0;
@@ -351,9 +330,8 @@ body.isDocked .topbar {
   display: flex;
   gap: 14px;
 
-  padding: 20px 0 0; /* space above buttons */
+  padding: 20px 0 0;
 
-  /* hidden state */
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
@@ -361,6 +339,8 @@ body.isDocked .topbar {
   transition:
     opacity 200ms ease,
     transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  transition-delay: 100ms;
 }
 
 /* Reveal on hover */
@@ -369,7 +349,6 @@ body.isDocked .topbar {
   transform: translateY(0);
   pointer-events: auto;
 }
-
 
 /* ---------- Buttons ---------- */
 .card__btn {
@@ -403,31 +382,18 @@ body.isDocked .topbar {
   background: #ffffff;
 }
 
-.card__actions {
-  transition-delay: 100ms;
-}
-
-/* ---------- Card hover grow ---------- */
-.card {
-  position: relative;
-  transition:
-    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-}
-
+/* ---------- Card hover grow (IMPORTANT: don’t use scale(300)) ---------- */
 .card:hover {
-  transform: scale(300);
+  transform: scale(1.02);
   z-index: 10;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
 }
 
+/* Optional helper (you referenced this in HTML) */
 .card--small-media .card__media img {
-  max-height: 280px;   /* tweak this number */
+  max-height: 280px;
   object-fit: contain;
 }
-
-
 
 .placeholder {
   color: rgba(255,255,255,0.85);
@@ -438,33 +404,27 @@ body.isDocked .topbar {
 @media (max-width: 980px) {
   :root { --padX: 24px; }
 
-  .hero__grid {
-    grid-template-columns: 1fr;
-  }
+  .hero__grid { grid-template-columns: 1fr; }
 
-  .side {
-    padding-top: 10px;
-  }
+  .side { padding-top: 10px; }
 
   .linklist {
     text-align: right;
     flex-direction: row;
     flex-wrap: wrap;
-
-    /* mobile spacing */
     gap: 14px 18px;
   }
 
-  .linklist a {
-    font-size: 18px;
-  }
+  .linklist a { font-size: 18px; }
 
-  .card, .card--text-right {
-    grid-template-columns: 1fr;
-  }
+  .card, .card--text-right { grid-template-columns: 1fr; }
 
-  .card__media {
-    height: 240px;
+  .card__media { height: 240px; }
+
+  /* BoxBots: let it breathe on mobile */
+  .card--boxbots .card__media img {
+    max-width: 60%;
+    max-height: 60%;
   }
 }
 
@@ -472,11 +432,10 @@ body.isDocked .topbar {
 .linklist a,
 .topbar__links a {
   position: relative;
-  display: inline-block;   /* key */
-  width: fit-content;      /* key: underline matches text width */
+  display: inline-block;
+  width: fit-content;
   text-decoration: none;
 }
-
 
 .linklist a::after,
 .topbar__links a::after {
@@ -484,7 +443,7 @@ body.isDocked .topbar {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -0.18em;   /* tune this: -0.12em to -0.22em */
+  bottom: -0.18em;
   height: 2px;
   background: currentColor;
 
@@ -492,7 +451,6 @@ body.isDocked .topbar {
   transform-origin: left;
   transition: transform 220ms ease;
 }
-
 
 .linklist a:hover::after,
 .topbar__links a:hover::after,
@@ -502,7 +460,6 @@ body.isDocked .topbar {
 }
 
 /* ---------- Fade-in text animation ---------- */
-/* ---------- Fade-up (gautham.city-ish) ---------- */
 .fade-in {
   opacity: 0;
   transform: translateY(22px);
@@ -512,53 +469,17 @@ body.isDocked .topbar {
   will-change: opacity, transform;
 }
 
-/* optional: feels a bit more premium, remove if you don’t want it */
-/* .fade-in { filter: blur(2px); }
-.fade-in.is-visible { filter: blur(0); transition: filter 700ms cubic-bezier(0.22, 1, 0.36, 1); } */
-
 .fade-in.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ---------- Stagger delay ---------- */
-.fade-delay-500 {
-  transition-delay: 500ms;
-}
-
 /* ---------- Stagger delay helpers ---------- */
-.fade-delay-300  { transition-delay: 600ms; }
-.fade-delay-800  { transition-delay: 1400ms; }
+.fade-delay-500 { transition-delay: 500ms; }
+.fade-delay-300 { transition-delay: 600ms; }
+.fade-delay-800 { transition-delay: 1400ms; }
 .fade-delay-1300 { transition-delay: 2500ms; }
 
-/* ---------- Sidebar "pulled down" intro ---------- */
-@keyframes pullDownIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-18px);
-  }
-  100% {
-    opacity: 0.92; /* matches your link opacity vibe */
-    transform: translateY(0);
-  }
-}
-
-/* Only run on first load while body has .intro */
-body.intro .linklist a {
-  opacity: 0;
-  transform: translateY(-18px);
-  animation: pullDownIn 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: var(--delay, 0ms);
-  will-change: transform, opacity;
-}
-
-/* ---------- Placeholders (keep sidebar “slots” pinned) ---------- */
-.link-placeholder {
-  display: block;
-  width: 100%;
-  pointer-events: none;
-  opacity: 0;
-}
 /* ---------- Sidebar "pulled down" intro ---------- */
 @keyframes pullDownIn {
   0% {
@@ -571,18 +492,23 @@ body.intro .linklist a {
   }
 }
 
-/* Runs only once when body has .intro */
 body.intro .linklist a {
   opacity: 0;
   transform: translateY(-26px);
-
-  /* 👇 THIS is the line you asked about */
   animation: pullDownIn 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-
   animation-delay: var(--delay, 0ms);
   will-change: transform, opacity;
 }
 
+/* ---------- Placeholders (keep sidebar “slots” pinned) ---------- */
+.link-placeholder {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .topbar, .topbar__links a, .linklist a, .fade-in {
     transition: none !important;
