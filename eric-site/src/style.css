@@ -23,7 +23,7 @@ body {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-
+/* top bar start */
 .topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
