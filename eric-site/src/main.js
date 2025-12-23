@@ -15,15 +15,13 @@ const topbar = document.getElementById("topbar");
 const topbarLinks = document.getElementById("topbarLinks");
 const sideNav = document.getElementById("sideNav");
 
-/* =========================
-   TUNING (YOUR EXACT SETTINGS)
-   ========================= */
+
 const HEADER_SHOW_AT_Y = 50;      // smaller = header appears earlier
 const STEP_PX = 95;              // smaller = links transfer faster
 const DURATION = 450;
 const EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 const MAX_MOVES_PER_FRAME = 6;
-/* ========================= */
+
 
 function allMovableNodes() {
   return [
@@ -62,7 +60,7 @@ function setDocked(docked) {
   document.body.classList.toggle("isDocked", docked);
 }
 
-/* ---------- Stable ordering for sidebar links ---------- */
+
 function ensureIndices() {
   const links = sideNav.querySelectorAll("a");
   links.forEach((a, i) => {
@@ -85,7 +83,7 @@ function findPlaceholder(idx) {
 }
 
 function createAllPlaceholdersIfMissing() {
-  // Ensure every slot from 0..maxIdx has either a link or a placeholder.
+ 
   const allLinks = [
     ...sideNav.querySelectorAll("a"),
     ...topbarLinks.querySelectorAll("a"),
@@ -96,16 +94,16 @@ function createAllPlaceholdersIfMissing() {
     return Math.max(m, v);
   }, 0);
 
-  // sample height for placeholders
+
   const sample = sideNav.querySelector("a") || topbarLinks.querySelector("a");
   const sampleH = sample ? Math.ceil(sample.getBoundingClientRect().height) : 24;
 
   for (let i = 0; i <= maxIdx; i++) {
     const idx = String(i);
 
-    // if there's already a link in this slot, skip
+
     if (sideNav.querySelector(`a[data-idx="${idx}"]`)) continue;
-    // if there's already a placeholder for this slot, skip
+  
     if (findPlaceholder(idx)) continue;
 
     const ph = document.createElement("div");
@@ -180,7 +178,7 @@ function snapAllBackToSidebar() {
   sorted.forEach((a) => sideNav.appendChild(a));
 }
 
-/* ---------- Header readiness: avoids “links disappear into hidden header” ---------- */
+
 let headerReady = false;
 
 topbar.addEventListener("transitionend", (e) => {
@@ -188,7 +186,7 @@ topbar.addEventListener("transitionend", (e) => {
   headerReady = document.body.classList.contains("isDocked");
 });
 
-/* ---------- Target number of links in header ---------- */
+
 function targetCount(scrollY) {
   if (scrollY <= HEADER_SHOW_AT_Y) return 0;
 
@@ -197,7 +195,7 @@ function targetCount(scrollY) {
 
   const progressed = scrollY - HEADER_SHOW_AT_Y;
 
-  // No “early bias” here; adjust only with STEP_PX
+
   const want = Math.floor(progressed / STEP_PX) + 1;
 
   return Math.max(0, Math.min(total, want));
@@ -256,7 +254,7 @@ function updateMenuTransfer() {
   }
 }
 
-/* ---------- Fade-in text on scroll ---------- */
+
 function setupFadeIn() {
   const fadeEls = document.querySelectorAll(".fade-in");
   if (!fadeEls.length) return;
@@ -276,7 +274,7 @@ function setupFadeIn() {
   fadeEls.forEach((el) => fadeObserver.observe(el));
 }
 
-/* ---------- Learn-more arrow rotate + click scroll ---------- */
+
 function setupLearnMore() {
   const learnMore = document.getElementById("learnMore");
   const projects = document.getElementById("projects");
@@ -316,7 +314,7 @@ function setupSideLinkIntro() {
 
 setupSideLinkIntro();
 
-/* ---------- Scroll loop ---------- */
+
 function onScroll() {
   if (ticking) return;
   ticking = true;
