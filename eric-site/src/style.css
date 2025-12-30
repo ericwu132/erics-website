@@ -2,7 +2,8 @@
   --bg: #597143;     
   --bg-2: #475a35;    
   --text: #f5f2ea;
-  --muted: rgba(245, 242, 234, 0.75);
+  --muted: rgba(245, 242, 234, 0.85);
+
 
   --card:  #597143;
   --card-2:#476c38;
@@ -271,6 +272,7 @@ body.isDocked .topbar {
 .card__text p {
   margin: 0;
   line-height: 1.6;
+  color: var(--muted);
 }
 
 .card__media {
