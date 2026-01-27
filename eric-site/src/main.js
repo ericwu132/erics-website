@@ -1,5 +1,3 @@
-import "./style.css";
-
 /**
  * Features:
  * - Header menu appears on scroll
@@ -9,6 +7,8 @@ import "./style.css";
  * - Fancy underline is CSS
  * - Fade-in text on scroll (IntersectionObserver)
  * - "Learn more" arrow rotates right -> down and click scrolls to projects
+ * helo
+ * there
  */
 
 const topbar = document.getElementById("topbar");
@@ -21,6 +21,7 @@ const STEP_PX = 95;              // smaller = links transfer faster
 const DURATION = 450;
 const EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 const MAX_MOVES_PER_FRAME = 6;
+const COMPACT_BREAKPOINT = 1500;
 
 
 function allMovableNodes() {
@@ -127,6 +128,18 @@ function removeAllPlaceholders() {
   sideNav.querySelectorAll(".link-placeholder").forEach((ph) => ph.remove());
 }
 
+function moveAllToTopbar() {
+  removeAllPlaceholders();
+  const links = [
+    ...sideNav.querySelectorAll("a"),
+    ...topbarLinks.querySelectorAll("a"),
+  ];
+  const sorted = links.sort(
+    (a, b) => Number(a.dataset.idx) - Number(b.dataset.idx)
+  );
+  sorted.forEach((a) => topbarLinks.appendChild(a));
+}
+
 function moveOneToTop_PINNED() {
   const next = sideNav.querySelector("a");
   if (!next) return;
@@ -205,6 +218,14 @@ let ticking = false;
 
 function updateMenuTransfer() {
   const y = window.scrollY;
+  const compact = window.matchMedia(`(max-width: ${COMPACT_BREAKPOINT}px)`).matches;
+
+  if (compact) {
+    headerReady = true;
+    setDocked(true);
+    moveAllToTopbar();
+    return;
+  }
 
   const shouldDock = y > HEADER_SHOW_AT_Y;
   const isDocked = document.body.classList.contains("isDocked");
@@ -274,6 +295,10 @@ function setupFadeIn() {
   fadeEls.forEach((el) => fadeObserver.observe(el));
 }
 
+export function refreshFadeIn() {
+  setupFadeIn();
+}
+
 
 function setupLearnMore() {
   const learnMore = document.getElementById("learnMore");
@@ -332,3 +357,65 @@ window.addEventListener("resize", () => {
 setupFadeIn();
 setupLearnMore();
 updateMenuTransfer();
+
+function setupProjectRail() {
+  const items = document.querySelectorAll(".rail__item");
+  if (!items.length) return;
+
+  const typeEl = document.getElementById("railType");
+  const titleEl = document.getElementById("railTitle");
+  const subtitleEl = document.getElementById("railSubtitle");
+  const bodyEl = document.getElementById("railBody");
+  const imageEl = document.getElementById("railImage");
+  const videoEl = document.getElementById("railVideo");
+
+  if (!typeEl || !titleEl || !subtitleEl || !bodyEl || !imageEl || !videoEl) return;
+
+  function applyFrom(item) {
+    const { type, title, subtitle, body, body2, image, video } = item.dataset;
+
+    items.forEach((el) => el.classList.remove("is-active"));
+    item.classList.add("is-active");
+
+    typeEl.textContent = type || "";
+    titleEl.textContent = title || "";
+    subtitleEl.textContent = subtitle || "";
+
+    bodyEl.innerHTML = "";
+    if (body) {
+      const p = document.createElement("p");
+      p.textContent = body;
+      bodyEl.appendChild(p);
+    }
+    if (body2) {
+      const p = document.createElement("p");
+      p.textContent = body2;
+      bodyEl.appendChild(p);
+    }
+
+    if (image) {
+      imageEl.src = image;
+    }
+
+    if (video) {
+      videoEl.src = video;
+      videoEl.style.display = "block";
+      imageEl.style.display = "none";
+    } else {
+      videoEl.src = "";
+      videoEl.style.display = "none";
+      imageEl.style.display = "block";
+    }
+  }
+
+  const initial = document.querySelector(".rail__item.is-active") || items[0];
+  if (initial) applyFrom(initial);
+
+  items.forEach((item) => {
+    item.addEventListener("mouseenter", () => applyFrom(item));
+    item.addEventListener("focus", () => applyFrom(item));
+    item.addEventListener("click", () => applyFrom(item));
+  });
+}
+
+setupProjectRail();

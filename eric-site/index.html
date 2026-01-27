@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -31,10 +31,10 @@
       <!-- hero start -->
       <section class="hero">
         <div class="hero__grid">
-          <div class="hero__content">
-            <h1 class="fade-in fade-delay-300">Hi, I’m Eric</h1>
+        <div class="hero__content">
+            <h1 class="fade-in fade-delay-300">hi, i'm eric</h1>
 
-              <h2 class="fade-in fade-delay-800">Right now, I'm...</h2>
+              <h2 class="fade-in fade-delay-800">right now, i'm...</h2>
               <ul class="fade-in fade-delay-800">
               <li>studying mechatronics engineering at UWaterloo</li>
               <li>a UWFE suspension manufacturer</li>
@@ -44,20 +44,31 @@
               <li class="sub">useful for hackathons and the site you're on right now</li>
             </ul>
 
-            <h2 class="fade-in fade-delay-800">I love...</h2>
+            <h2 class="fade-in fade-delay-800">i love...</h2>
             <ul class="fade-in fade-delay-800">
               <li>finding the funniest solutions to the funniest problems</li>
               <li>doing work that makes time irrelevant</li>
               <li>anything about history (seriously)</li>
             </ul>
 
-            <div class="downhint fade-in fade-delay-1300" id="learnMore">
-              <span>What I’ve been up to</span>
-              <span class="arrow" aria-hidden="true">›</span>
+            <div class="hero__actions">
+              <div class="downhint fade-in fade-delay-1300" id="learnMore">
+                <span>what i've been up to</span>
+                <span class="arrow" aria-hidden="true"></span>
+              </div>
+
+              <a class="resume-btn fade-in fade-delay-1300" href="/EricResumeV9.pdf" target="_blank" rel="noreferrer">
+                view resume
+              </a>
             </div>
           </div>
 
-          
+          <div class="hero__experiences">
+            <section class="experiences experiences--hero" id="experiences">
+              <div id="experiencesRoot"></div>
+            </section>
+          </div>
+
           <aside class="side" id="side">
             <nav class="linklist" id="sideNav" aria-label="Social links">
               <a href="https://www.linkedin.com/in/w-eric/" target="_blank" rel="noreferrer">linkedin</a>
@@ -65,146 +76,150 @@
               <a href="https://github.com/ericwu132" target="_blank" rel="noreferrer">github</a>
               <a href="https://devpost.com/ericwu132" target="_blank" rel="noreferrer">devpost</a>
               <a href="/EricResumeV9.pdf" target="_blank" rel="noreferrer">resume</a>
+              <!-- <a href="/blog.html">notes</a> -->
             </nav>
           </aside>
         </div>
       </section>
 
      
-      <section class="projects" id="projects">
-
-         
-          <h2 class="projects__title fade-in">
-          EXPERIENCES
-          </h2>
-
-  <div class="projects__inner">
-<!-- project start -->
-          <article class="card card--text-left fade-in">
-            <div class="card__text">
-              <h3>Figma Make-a-Thon — 1st Place</h3>
-              <p>We (Eric and Ryan) have had some crazy issues using laundry spaces in Waterloo. 
-                From flooded washers to waiting for over an hour for a free dryer at 3 AM, we've experienced it all. 
-                Because of this trauma, we really wanted to make an app that solves our issues. Doing laundry is such a mundane, 
-                boring, and oftentimes a time-wasting task, especially for first years. With our app, we "gamified" the chore of laundry, 
-                turning it into an interactive, community-based platform to improve communication, and most importantly save time.
-                <br> <br>
-                This app, WaterlooWash, was created using Figma and Figma Make. Full app implementation coming soon.
-                <br> <br>
-              </p>
-              <div class="card__actions">
-                <a href="https://devpost.com/software/waterloowash" target="_blank" rel="noreferrer" class="card__btn">
-                  devpost
-                </a>
-                <a href="https://brown-carrot-21193081.figma.site/" target="_blank" rel = "nonreferrer" class = "card__btn">
-                  try it out
-                </a>
-              </div>
-
-            </div>
-            <div class="card__media">
-              <img src="/waterloowash.png" alt="Project visual" />
-            </div>
-          </article>
-
-
-          <article class="card card--text-right fade-in">
-            <div class="card__media">
-              <img src="/robotphoto.jpg" alt="Robot CAD render" />
-            </div>
-            <div class="card__text">
-              <h3>Churchill Robotics - Mechanical lead</h3>
-              <p>Mechanical Lead of Team 3388C in Churchill Robotics. Responsible for design, CAD, prototyping, mechanical 
-                implementation, and documentation. Placed top five in Alberta, becoming Provincial Champions in 2024, and received other miscellaneous 
-                awards at local competitions. 
-                <br> <br>
-                I learned Fusion 360 from the ground up with no formal training, where I primarily used it to create custom laser
-                cut acetal parts for things that required unique and precise components.
-              </p>
-               <div class="card__actions">
-                <a
-                  href="https://docs.google.com/document/d/141_ABgWPmy6cFX0sDcEpRGT81d43yyqp4V95il30W7E/edit?usp=sharing"
-                  target="_blank" rel="noreferrer" class="card__btn">
-                  
-                    photo collage
-                </a>
-
-                <a
-                  href="https://docs.google.com/presentation/d/1zWgKYziix1xfEnAQCKqbED9QRbb_PukrG91in30kYBo/edit?usp=sharing"
-                  target="_blank" rel="noreferrer" class="card__btn">
-                
-                  engineering notebook
-                </a>
-            </div>
-          </article>
-
-
-          <article class="card card--text-left fade-in card--boxbots">
-            <div class="card__text">
-              <h3>BoxBots Hackathon — Best Game Overall</h3>
-              <p>
-                Won the Best Game award at the BoxBots hackathon, which was actually my very first
-                hackathon! My team and I built Skee-bidi, an arcade-style skee-ball machine created purely out of 
-                cardboard. Our fully automated design featured three Arduino microcontrollers communicating over I²C, 
-                enabling synchronized data transfer between the sensors, the timer, and the scorekeeping displays. For 
-                ball detection, we integrated both infrared and ultrasonic sensors.
-                <br><br>
-                I was responsible for developing the CAD models in SolidWorks for this project, which included designing 
-                custom mounts for the IR and ultrasonic sensors, as well as a dedicated DC motor mount and the dispensing 
-                door assembly. Beyond the mechanical design, I also handled the wiring and programming of the motor controller
-                for the dispensing door, integrating it seamlessly into our I²C communication network.
-              </p>
-
-              <div class="card__actions">
-                <a
-                  href="https://devpost.com/software/skee-bidi"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="card__btn card__btn--primary"
-                >
-                  devpost
-                </a>
-              </div>
-            </div>
-
-            <div class="card__media card__media--small">
-              <img src="boxbots.jpg" alt="BoxBots Hackathon game" />
-            </div>
-          </article>
-
-
-
-
-
-          <article class="card card--text-right fade-in">
-            <div class="card__media">
-              <img src="/itta.jpg" alt="Robot CAD render" />
-            </div>
-            <div class="card__text">
-              <h3>Inspire Table Tennis Assoc. - Founder and Treasurer</h3>
-              <p>Co-founded Inspire Table Tennis Association (ITTA) to create an accessible, 
-                high-quality entry point into table tennis. I led weekly coaching sessions on fundamentals, 
-                coached players during tournaments, and supported skill development in competitive settings. 
-                Alongside coaching, I managed finances in Excel, organized events, and worked with 
-                sponsors to grow the organization.
-          
-              </p>
-               <div class="card__actions">
-                <a
-                  href="https://www.itta.ca/"
-                  target="_blank" rel="noreferrer" class="card__btn">
-                  
-                    ITTA website
-               </a>
-            </div>
-          </article>
-          
+      <section class="projects projects--rail" id="projects">
+  <div class="rail">
+    <aside class="rail__left">
+      <div class="rail__header">
+        <div class="rail__note">
+          <div class="rail__eyebrow">Projects</div>
+          <p>
+            Here's a few projects I've worked on over the past few years. Hover over any title to see more details!
+          </p>
         </div>
-      </section>
+      </div>
 
-      <div style="height: 40vh"></div>
+      <div class="rail__group">
+        <div class="rail__group-title">PROJECTS</div>
+        <ul class="rail__list">
+          <li>
+            <button
+              class="rail__item is-active"
+              type="button"
+              data-type="PROJECTS"
+              data-title="Autonomous Self Driving"
+              data-subtitle="I built a modular autonomy stack for a small-scale autonomous vehicle,
+               focused on real-time environment mapping and path planning. This included 
+               a custom costmap that fused simulated LiDAR data with obstacle
+                inflation to create a reliable navigable map of the surroundings."
+              data-body="I then implemented a graph-based planner to generate efficient, 
+              collision-free routes, tuning parameters like map resolution and safety margins
+               to balance smooth motion and performance."
+              data-body2="Visualized in docker."
+              data-video="https://www.youtube.com/embed/ch-srK1s9WU"
+            >
+              <span class="rail__item-name">Autonomous Self Driving</span>
+              <span class="rail__item-line"></span>
+              <span class="rail__item-year">2025</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="rail__item"
+              type="button"
+              data-type="PROJECTS"
+              data-title="WaterlooWash"
+              data-subtitle="A free website that makes doing the laundry at Waterloo easier."
+              data-body="We (Eric and Ryan) have had some crazy issues using laundry spaces in Waterloo. 
+              From flooded washers to waiting for over an hour for a free dryer at 3 AM, we've experienced it all. 
+              Because of this trauma, we really wanted to make an app that solves our issues. 
+              Doing laundry is such a mundane, boring, and oftentimes a time-wasting task, especially for first years. 
+              With our app, we gamified the chore of laundry, turning it into an interactive, community-based platform 
+              to improve communication, and most importantly save time."
+              data-body2="This app, WaterlooWash, was created using Figma and Figma Make. Full app implementation coming soon."
+              data-image="/waterloowash.png"
+            >
+              <span class="rail__item-name">WaterlooWash</span>
+              <span class="rail__item-line"></span>
+              <span class="rail__item-year">Dec 2025</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="rail__item"
+              type="button"
+              data-type="PROJECTS"
+              data-title="Arduino Arcade Machine"
+              data-subtitle="Skee-ball machine for the BoxBots hackathon, where we won 1st place."
+              data-body="Won the Best Game award at the BoxBots hackathon, which was actually my very 
+              first hackathon! My team and I built Skee-bidi, an arcade-style skee-ball machine created 
+              purely out of cardboard. Our fully automated design featured three Arduino microcontrollers 
+              communicating over I²C, enabling synchronized data transfer between the sensors, the timer, 
+              and the scorekeeping displays. For ball detection, we integrated both infrared and ultrasonic 
+              sensors."
+              data-body2="I was responsible for developing the CAD models in SolidWorks for this project, which 
+              included designing custom mounts for the IR and ultrasonic sensors, as well as a dedicated DC motor 
+              mount and the dispensing door assembly. Beyond the mechanical design, I also handled the wiring and 
+              programming of the motor controller for the dispensing door, integrating it seamlessly into our I²C 
+              communication network."
+              data-image="/boxbots.jpg"
+            >
+              <span class="rail__item-name">Arduino Arcade Machine</span>
+              <span class="rail__item-line"></span>
+              <span class="rail__item-year">Nov 2025</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="rail__item"
+              type="button"
+              data-type="PROJECTS"
+              data-title="Star Wars Droid"
+              data-subtitle="COMING SOON"
+              data-body=""
+              data-body2=""
+              data-image="/robotphoto.jpg"
+            >
+              <span class="rail__item-name">Star Wars Droid</span>
+              <span class="rail__item-line"></span>
+              <span class="rail__item-year">2024</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="rail__right">
+      <div class="rail__type" id="railType">HARDWARE</div>
+      <h3 class="rail__title" id="railTitle">WaterlooWash</h3>
+      <p class="rail__subtitle" id="railSubtitle">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </p>
+
+      <div class="rail__body" id="railBody">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua.
+        </p>
+        <p>
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </p>
+      </div>
+
+      <div class="rail__image">
+        <img id="railImage" src="/waterloowash.png" alt="Selected project" />
+        <iframe
+          id="railVideo"
+          title="Project video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <div style="height: 8vh"></div>
     </main>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eric Wu - Beliefs</title>
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+
+  <body>
+    <main class="blog blog--beliefs" id="top">
+      <a class="brand" href="/index.html">Back to home</a>
+
+      <header class="beliefs-header">
+        <span class="beliefs-header__kicker">Beliefs</span>
+        <h1 class="beliefs-header__title">Notes I try to live by</h1>
+        <p class="beliefs-header__lede">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua.
+        </p>
+      </header>
+
+      <div class="beliefs-layout">
+        <aside class="beliefs-toc">
+          <h2>Contents</h2>
+          <ol>
+            <li>
+              <button class="beliefs-toc__link" type="button" data-target="belief-1" aria-controls="belief-1">
+                Build the thing that scares you
+              </button>
+            </li>
+            <li>
+              <button class="beliefs-toc__link" type="button" data-target="belief-2" aria-controls="belief-2">
+                Clarity beats confidence
+              </button>
+            </li>
+            <li>
+              <button class="beliefs-toc__link" type="button" data-target="belief-3" aria-controls="belief-3">
+                Make the smallest useful test
+              </button>
+            </li>
+            <li>
+              <button class="beliefs-toc__link" type="button" data-target="belief-4" aria-controls="belief-4">
+                Time is a design constraint
+              </button>
+            </li>
+            <li>
+              <button class="beliefs-toc__link" type="button" data-target="belief-5" aria-controls="belief-5">
+                Every problem is a story
+              </button>
+            </li>
+          </ol>
+        </aside>
+
+        <div class="beliefs-content">
+          <section class="beliefs-entry" id="belief-1">
+            <h3>Build the thing that scares you</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
+              laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.
+            </p>
+          </section>
+
+          <section class="beliefs-entry" id="belief-2">
+            <h3>Clarity beats confidence</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+          </section>
+
+          <section class="beliefs-entry" id="belief-3">
+            <h3>Make the smallest useful test</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </section>
+
+          <section class="beliefs-entry" id="belief-4">
+            <h3>Time is a design constraint</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde
+              omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+            </p>
+          </section>
+
+          <section class="beliefs-entry" id="belief-5">
+            <h3>Every problem is a story</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem
+              quia voluptas sit aspernatur aut odit aut fugit.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script>
+      const tocButtons = document.querySelectorAll(".beliefs-toc__link");
+      const entries = document.querySelectorAll(".beliefs-entry");
+
+      function setActiveEntry(id) {
+        entries.forEach((entry) => {
+          entry.classList.toggle("is-active", entry.id === id);
+        });
+
+        tocButtons.forEach((button) => {
+          const isActive = button.dataset.target === id;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-current", isActive ? "true" : "false");
+        });
+      }
+
+      if (entries.length) {
+        const mostRecent = entries[entries.length - 1].id;
+        setActiveEntry(mostRecent);
+      }
+
+      tocButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setActiveEntry(button.dataset.target);
+        });
+      });
+    </script>
+  </body>
+</html>
