@@ -44,14 +44,19 @@ export default function Experiences() {
   const [openId, setOpenId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [maxHeight, setMaxHeight] = useState(0);
-  const contentRef = useRef(null);
+  const contentRefs = useRef({});
   const openTimerRef = useRef(null);
   const closeTimerRef = useRef(null);
 
+  // Detect if device supports hover
+  const [isTouchDevice] = useState(() => {
+    return !window.matchMedia('(hover: hover)').matches;
+  });
+
   useLayoutEffect(() => {
-    if (!contentRef.current) return;
-    if (isOpen) {
-      setMaxHeight(contentRef.current.scrollHeight);
+    const activeRef = openId ? contentRefs.current[openId] : null;
+    if (isOpen && activeRef) {
+      setMaxHeight(activeRef.scrollHeight);
     } else {
       setMaxHeight(0);
     }
@@ -88,13 +93,6 @@ export default function Experiences() {
     }, 50);
   }
 
-  function handleTransitionEnd(event) {
-    if (event.propertyName !== "max-height") return;
-    if (!isOpen) {
-      setOpenId(null);
-    }
-  }
-
   return (
     <>
       <div className="experiences__header">
@@ -117,13 +115,14 @@ export default function Experiences() {
         <div className="experiences__list">
           {experiences.map((exp) => {
             const isActive = openId === exp.id && isOpen;
+            const panelHeight = isActive ? maxHeight : 0;
             return (
               <div className="exp-block" key={exp.id}>
                 <button
                   className={`exp-row ${isActive ? "is-active" : ""}`}
                   type="button"
-                  onMouseEnter={() => handleOpen(exp.id)}
-                  onFocus={() => handleOpen(exp.id)}
+                  onMouseEnter={!isTouchDevice ? () => handleOpen(exp.id) : undefined}
+                  onFocus={!isTouchDevice ? () => handleOpen(exp.id) : undefined}
                   onClick={() => handleOpen(exp.id)}
                 >
                   <span className="exp-row__logo">
@@ -137,25 +136,26 @@ export default function Experiences() {
                   <span className="exp-row__time">{exp.time}</span>
                 </button>
 
-                {openId === exp.id ? (
+                <div
+                  className={`exp-detail ${isActive ? "is-open" : ""}`}
+                  style={{ maxHeight: `${panelHeight}px` }}
+                  onMouseEnter={() => {
+                    if (closeTimerRef.current) {
+                      clearTimeout(closeTimerRef.current);
+                      closeTimerRef.current = null;
+                    }
+                  }}
+                >
                   <div
-                    className={`exp-detail ${isOpen ? "is-open" : ""}`}
-                    style={{ maxHeight: `${maxHeight}px` }}
-                    onTransitionEnd={handleTransitionEnd}
-                    onMouseEnter={() => {
-                      if (closeTimerRef.current) {
-                        clearTimeout(closeTimerRef.current);
-                        closeTimerRef.current = null;
-                      }
-                    }}
+                    ref={(el) => { contentRefs.current[exp.id] = el; }}
+                    className="exp-detail__inner"
                   >
-                    <div ref={contentRef} className="exp-detail__inner">
-                      <div className="exp-detail__text">
-                        <h3 className="exp-detail__title">what i did</h3>
-                        <p>{exp.body}</p>
-                        <p>{exp.body2}</p>
-                      </div>
-                      <div className="exp-detail__media">
+                    <div className="exp-detail__text">
+                      <h3 className="exp-detail__title">what i did</h3>
+                      <p>{exp.body}</p>
+                      <p>{exp.body2}</p>
+                    </div>
+                    <div className="exp-detail__media">
                       <div className="exp-detail__image">
                         <img
                           src={exp.image}
@@ -165,10 +165,9 @@ export default function Experiences() {
                           }}
                         />
                       </div>
-                      </div>
                     </div>
                   </div>
-                ) : null}
+                </div>
               </div>
             );
           })}

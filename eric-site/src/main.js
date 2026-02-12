@@ -219,11 +219,14 @@ let ticking = false;
 function updateMenuTransfer() {
   const y = window.scrollY;
   const compact = window.matchMedia(`(max-width: ${COMPACT_BREAKPOINT}px)`).matches;
+  const mobile = window.matchMedia('(max-width: 768px)').matches;
 
   if (compact) {
     headerReady = true;
     setDocked(true);
     moveAllToTopbar();
+    // Skip FLIP animations on mobile for better performance
+    if (mobile) return;
     return;
   }
 
@@ -411,11 +414,27 @@ function setupProjectRail() {
   const initial = document.querySelector(".rail__item.is-active") || items[0];
   if (initial) applyFrom(initial);
 
+  // Detect hover capability
+  const hasHover = window.matchMedia('(hover: hover)').matches;
+
   items.forEach((item) => {
-    item.addEventListener("mouseenter", () => applyFrom(item));
-    item.addEventListener("focus", () => applyFrom(item));
-    item.addEventListener("click", () => applyFrom(item));
+    if (hasHover) {
+      // Desktop: hover + focus
+      item.addEventListener("mouseenter", () => applyFrom(item));
+      item.addEventListener("focus", () => applyFrom(item));
+    } else {
+      // Touch: click only
+      item.addEventListener("click", () => applyFrom(item));
+    }
   });
 }
 
 setupProjectRail();
+
+// Fix mobile viewport height for iOS
+function setVH() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+setVH();
+window.addEventListener('resize', setVH);
