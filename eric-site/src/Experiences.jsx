@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const experiences = [
   {
@@ -53,6 +53,12 @@ export default function Experiences() {
     return !window.matchMedia('(hover: hover)').matches;
   });
 
+  // Trigger fade-in after component mounts and paints
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    requestAnimationFrame(() => setMounted(true));
+  }, []);
+
   useLayoutEffect(() => {
     const activeRef = openId ? contentRefs.current[openId] : null;
     if (isOpen && activeRef) {
@@ -95,7 +101,7 @@ export default function Experiences() {
 
   return (
     <>
-      <div className="experiences__header">
+      <div className={`experiences__header fade-in fade-delay-800 ${mounted ? "is-visible" : ""}`}>
         <h2 className="experiences__title">where i've been</h2>
       </div>
 
@@ -113,11 +119,15 @@ export default function Experiences() {
         }}
       >
         <div className="experiences__list">
-          {experiences.map((exp) => {
+          {experiences.map((exp, i) => {
             const isActive = openId === exp.id && isOpen;
             const panelHeight = isActive ? maxHeight : 0;
             return (
-              <div className="exp-block" key={exp.id}>
+              <div
+                className={`exp-block fade-in ${mounted ? "is-visible" : ""}`}
+                key={exp.id}
+                style={{ transitionDelay: `${1400 + i * 150}ms` }}
+              >
                 <button
                   className={`exp-row ${isActive ? "is-active" : ""}`}
                   type="button"
