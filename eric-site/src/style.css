@@ -507,18 +507,18 @@ body.isDocked .topbar {
 .exp-detail__image {
   width: 100%;
   max-width: 240px;
-  height: 170px;
+  aspect-ratio: 4/3;
   background: var(--card-2);
   border-radius: 12px;
   overflow: hidden;
-  display: grid;
-  place-items: center;
 }
 
 .exp-detail__image img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -990,9 +990,13 @@ video {
     grid-template-columns: 1fr;
   }
 
+  .exp-detail__media {
+    justify-self: center;
+  }
+
   .exp-detail__image {
-    max-width: 100%;
-    height: 200px;
+    max-width: 320px;
+    aspect-ratio: 16/10;
   }
 }
 
@@ -1153,8 +1157,8 @@ video {
   }
 
   .exp-detail__image {
-    max-width: 100%;
-    height: 160px;
+    max-width: 280px;
+    aspect-ratio: 16/10;
   }
 
   .projects {
@@ -1256,7 +1260,8 @@ video {
   }
 
   .exp-detail__image {
-    height: 140px;
+    max-width: 100%;
+    aspect-ratio: 16/10;
   }
 
   .projects {
