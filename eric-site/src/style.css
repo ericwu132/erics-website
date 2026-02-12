@@ -21,6 +21,11 @@
 html, body {
   margin: 0;
   padding: 0;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -1292,7 +1297,8 @@ video {
 
 /* underline + fill */
 .linklist a,
-.topbar__links a {
+.topbar__links a,
+.rail__link {
   position: relative;
   display: inline-block;
   width: fit-content;
@@ -1303,6 +1309,10 @@ video {
   background-position: 0 100%;
   background-repeat: no-repeat;
   transition: background-size 220ms ease, background-position 220ms ease;
+}
+
+.rail__link {
+  color: var(--text);
 }
 
 .hero__actions {
@@ -1352,8 +1362,10 @@ video {
 
 .linklist a:hover,
 .topbar__links a:hover,
+.rail__link:hover,
 .linklist a:focus-visible,
-.topbar__links a:focus-visible {
+.topbar__links a:focus-visible,
+.rail__link:focus-visible {
   background-size: 100% 100%;
   background-position: 0 0;
 }

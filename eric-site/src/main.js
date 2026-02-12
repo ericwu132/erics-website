@@ -387,12 +387,12 @@ function setupProjectRail() {
     bodyEl.innerHTML = "";
     if (body) {
       const p = document.createElement("p");
-      p.textContent = body;
+      p.innerHTML = body;
       bodyEl.appendChild(p);
     }
     if (body2) {
       const p = document.createElement("p");
-      p.textContent = body2;
+      p.innerHTML = body2;
       bodyEl.appendChild(p);
     }
 
