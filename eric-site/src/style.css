@@ -162,13 +162,16 @@ body.isDocked .topbar {
   background: rgba(245, 242, 234, 0.12);
   color: var(--text);
 
+  scale: 1;
   transition:
     background 220ms ease,
+    scale 220ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .downhint:hover {
   background: rgba(245, 242, 234, 0.22);
+  scale: 1.1;
   transform: translateY(-2px);
 }
 
@@ -1324,7 +1327,7 @@ video {
 }
 
 .hero__actions .resume-btn {
-  margin: 0;
+  margin: 0 0 0 12px;    
 }
 
 .hero__actions .downhint {
@@ -1336,7 +1339,7 @@ video {
   align-items: center;
   justify-content: center;
   padding: 12px 22px;
-  margin: 18px 0 12px;
+  margin: 18px 0 12px 20px;
   border-radius: 999px;
   font-size: 16px;
   font-weight: 650;
@@ -1346,16 +1349,19 @@ video {
   border: 2px solid rgba(45, 58, 31, 0.55);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
   transform-origin: center;
-  will-change: transform;
+  will-change: transform, scale;
+  scale: 1;
   transition:
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 220ms cubic-bezier(0.22, 1, 0.36, 1),
     background 220ms ease,
     border-color 220ms ease;
 }
 
 .resume-btn:hover,
 .resume-btn:focus-visible {
-  transform: translateY(-2px) scale(1.03);
+  transform: translateY(-2px);
+  scale: 1.1;
   background: rgba(245, 242, 234, 0.9);
   border-color: rgba(45, 58, 31, 0.8);
 }
@@ -1376,13 +1382,33 @@ video {
   transform: translateY(22px);
   transition:
     opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 220ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 .fade-in.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.downhint.fade-in.is-visible {
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms ease;
+  transition-delay: 0ms;
+}
+
+.resume-btn.fade-in.is-visible {
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms ease,
+    border-color 220ms ease;
+  transition-delay: 0ms;
 }
 
 /* stagger delay*/
