@@ -365,6 +365,11 @@ setupFadeIn();
 setupLearnMore();
 updateMenuTransfer();
 
+document.querySelector(".brand--signature")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
 function setupProjectRail() {
   const items = document.querySelectorAll(".rail__item");
   if (!items.length) return;
