@@ -289,6 +289,10 @@ function setupFadeIn() {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
           fadeObserver.unobserve(entry.target);
+          // After fade-in completes, add "appeared" so hover delays reset to 0
+          entry.target.addEventListener("transitionend", () => {
+            entry.target.classList.add("appeared");
+          }, { once: true });
         }
       }
     },

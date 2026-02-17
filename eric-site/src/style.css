@@ -1392,7 +1392,7 @@ video {
   transform: translateY(0);
 }
 
-.downhint.fade-in.is-visible {
+.downhint.fade-in.appeared {
   transition:
     opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -1401,7 +1401,7 @@ video {
   transition-delay: 0ms;
 }
 
-.resume-btn.fade-in.is-visible {
+.resume-btn.fade-in.appeared {
   transition:
     opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -1415,7 +1415,7 @@ video {
 .fade-delay-500 { transition-delay: 500ms; }
 .fade-delay-300 { transition-delay: 600ms; }
 .fade-delay-800 { transition-delay: 1400ms; }
-.fade-delay-1300 { transition-delay: 2500ms; }
+.fade-delay-1300 { transition-delay: 2300ms; }
 
 /* sidebar */
 @keyframes pullDownIn {
