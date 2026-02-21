@@ -1589,5 +1589,17 @@ body.intro .linklist a {
 .webring {
   display: flex;
   justify-content: center;
-  padding: 60px 0 20px;
+  padding: 10px 0 20px;
+}
+
+.webring a {
+  display: inline-flex;
+  scale: 1;
+  transition:
+    scale 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.webring a:hover {
+  scale: 1.18;
 }

@@ -407,6 +407,9 @@ function setupProjectRail() {
 
     if (image) {
       imageEl.src = image;
+      const size = item.dataset.imageSize;
+      imageEl.style.width = size ? `${size}%` : "";
+      imageEl.style.margin = size ? "0 auto" : "";
     }
 
     if (video) {
