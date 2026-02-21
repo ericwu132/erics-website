@@ -1585,3 +1585,9 @@ body.intro .linklist a {
     transition: none !important;
   }
 }
+
+.webring {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0 20px;
+}
