@@ -5,7 +5,7 @@ const experiences = [
     id: "spyder",
     logo: "/sp2.jpg",
     company: "Spyder Controls",
-    role: "electromechanical engineer",
+    role: "electromechanical technologist",
     time: "May '26 - Aug '26",
     body: "incoming S26",
     body2: "",
