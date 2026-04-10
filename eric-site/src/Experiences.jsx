@@ -2,11 +2,21 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const experiences = [
   {
+    id: "spyder",
+    logo: "/sp2.jpg",
+    company: "Spyder Controls",
+    role: "electromechanical engineer",
+    time: "May '26 - Aug '26",
+    body: "incoming S26",
+    body2: "",
+    image: "",
+  },
+  {
     id: "wato",
     logo: "/wato.jpg",
     company: "WATonomous",
     role: "software engineering member",
-    time: "Jan 2026 - present",
+    time: "Jan '26 - present",
     body:
       "currently making a robot type on a keyboard. Using ROS2 and NVIDIA jetson",
     body2:
@@ -18,7 +28,7 @@ const experiences = [
     logo: "/uwfe.png",
     company: "University of Waterloo Formula Electric",
     role: "mechanical engineering member",
-    time: "Sept 2025 - present",
+    time: "Sept '25 - present",
     body:
       "manufactured for the suspension subteam, making things like spacers, top hats, and control arm plugs.",
     body2:
@@ -31,7 +41,7 @@ const experiences = [
     logo: "/churchill.jpg",
     company: "Churchill Robotics",
     role: "mechanical lead",
-    time: "Oct 2023 - May 2025",
+    time: "Oct '23 - May '25",
     body:
       "built world class vex robots, won alberta provincials, and competed at worlds.",
     body2:
@@ -161,21 +171,22 @@ export default function Experiences() {
                     className="exp-detail__inner"
                   >
                     <div className="exp-detail__text">
-                      <h3 className="exp-detail__title">what i did</h3>
                       <p>{exp.body}</p>
                       <p>{exp.body2}</p>
                     </div>
-                    <div className="exp-detail__media">
-                      <div className="exp-detail__image">
-                        <img
-                          src={exp.image}
-                          alt={`${exp.company} preview`}
-                          style={{
-                            objectPosition: exp.imagePosition || "center",
-                          }}
-                        />
+                    {exp.image && (
+                      <div className="exp-detail__media">
+                        <div className="exp-detail__image">
+                          <img
+                            src={exp.image}
+                            alt={`${exp.company} preview`}
+                            style={{
+                              objectPosition: exp.imagePosition || "center",
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>

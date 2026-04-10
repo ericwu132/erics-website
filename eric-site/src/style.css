@@ -357,8 +357,8 @@ body.isDocked .topbar {
 }
 
 .exp-row__logo {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 999px;
   display: grid;
   place-items: center;
